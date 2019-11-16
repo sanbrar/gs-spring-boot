@@ -56,16 +56,4 @@
             </plugin>
         </plugins>
     </build>
-<distributionManagement>
-    <snapshotRepository>
-        <id>snapshots</id>
-        <name>ip-172-31-39-187-snapshots</name>
-        <url>http://localhost:8081/artifactory/libs-snapshot</url>
-    </snapshotRepository>
-    <repository>
-        <id>central</id>
-        <name>ip-172-31-39-187-releases</name>
-        <url>http://localhost:8081/artifactory/libs-release</url>
-    </repository>
-</distributionManagement>
 </project>
