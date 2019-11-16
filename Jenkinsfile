@@ -22,7 +22,7 @@ pipeline {
                     releaseRepo: "libs-release",
                     snapshotRepo: "libs-snapshot"
                 )
-            }
+
         }
 
         stage ('Exec Maven') {
@@ -43,6 +43,6 @@ pipeline {
                     serverId: "art-1"
                 )
             }
-        }
+        }    
     }
 }
