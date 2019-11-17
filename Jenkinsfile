@@ -16,7 +16,7 @@ pipeline {
         stage ('Artifactory configuration') {
             steps {
                 rtMavenDeployer (
-                    id: "MAVEN_DEPLOYER",   //deployer-unique-id'
+                    id: "MAVEN_DEPLOYER",   //deployer-unique-id 
                     serverId: "art-1",
                     releaseRepo: "libs-release-local",
                     snapshotRepo: "libs-snapshot-local"
