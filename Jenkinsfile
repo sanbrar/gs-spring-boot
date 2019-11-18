@@ -1,26 +1,6 @@
 def pomFile = "pom.xml"
 def pomVersion = "2.0.0"
 
-def getPomVersion(String pomFile = 'pom.xml') {
-
-    echo 'in side getPomVersion, pomFile: ${pomFile}'
-    def version = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="${pomFile}" | grep -e "^[^[]" '
-
-        // pom_version = sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true
-        
-        // POMVERSION = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -e "^[^[]" '
-        
-        
-        //pom_version = sh mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -v '\['
-        
-        //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
-        //POM_IMAGE = readMavenPom().getArtifactId()
-        //POM_VERSION = readMavenPom().getVersion()   
-
-    return '1.0.2'
-
-}
-
 pipeline {
     agent any
     options {
@@ -33,18 +13,20 @@ pipeline {
 
     }
     stages {
-        
-        stage('build') {
+       
+        stage('Set Variables') {
           steps {
               
               script {
                    echo "pomFile Name before setting ${pomFile}"                  
                    pomFile = "complete/pom.xml"
+                    echo "After setting the pomFile: ${pomFile}"
               }
               
             script {
-              echo "pomVersion before using function to set pomVersion ${pomVersion}"
-              pomVersion = getPomVersion("complete/pom.xml")
+                echo "pomVersion before using function to set pomVersion ${pomVersion}"
+                pomVersion = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="${pomFile}" | grep -e "^[^[]" '
+                echo "After setting the pomVersion: ${pomVersion}"
             }
           }
         }        
