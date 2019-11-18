@@ -5,6 +5,9 @@ pipeline {
     }
     environment {
         MAVEN_HOME = '/usr/share/maven'
+        
+        pom_version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true 
+               
     }
     stages {
         
@@ -55,9 +58,8 @@ pipeline {
                
                 //pom_version = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -e "^[^\[]"'
                 
-                pom_version = sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true 
-               
-                echo ${pom_version}
+
+                echo '${pom_version}'
                 
                 sh 'mvn versions:set versions:commit -DnewVersion="${pom_version}-SNAPSHOT" -file="complete/pom.xml"'
 
