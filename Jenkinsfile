@@ -14,6 +14,13 @@ pipeline {
            // }
        // }
 
+        stage("Test IF "){
+          if(env.BRANCH_NAME == 'master'){
+           // Deploy steps here
+              echo "master branch"
+          }
+        }
+        
         stage ('Artifactory configuration') {
             steps {
                 rtMavenDeployer (
