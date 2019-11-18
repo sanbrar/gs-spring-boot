@@ -7,23 +7,6 @@ pipeline {
         MAVEN_HOME = '/usr/share/maven'
     }
     stages {
-       // stage ('Clone') {
-         //   steps {
-                //git branch: 'master', url: "https://github.com/sanbrar/gs-spring-boot.git"  //${env.BRANCH_NAME}
-                //Hello
-           // }
-       // }
-
-        stage ('Speak') {
-            when {
-                // Only say hello if a "greeting" is requested
-                expression { env.BRANCH_NAME == 'master' }
-            }
-            steps {
-                echo "master branch"
-            }
-        }
-        
         
         stage ('Artifactory configuration') {
             steps {
@@ -33,6 +16,15 @@ pipeline {
                     releaseRepo: "libs-release-local",
                     snapshotRepo: "libs-snapshot-local"
                 )
+            } 
+        }
+        
+        stage ('Artifactory Conditional Config') {
+            when {
+                // Only say hello if a "greeting" is requested
+                expression { env.BRANCH_NAME == 'master' }
+            }
+            steps {
                 rtMavenResolver (
                     id: "MAVEN_RESOLVER",   //resolver-unique-id
                     serverId: "art-1",
@@ -40,8 +32,23 @@ pipeline {
                     snapshotRepo: "libs-snapshot"
                 )
             }
-        }
 
+            when {
+                // Only say hello if a "greeting" is requested
+                expression { env.BRANCH_NAME != 'master' }  //Not Master
+            }
+            steps {
+                rtMavenResolver (
+                    id: "MAVEN_RESOLVER",   //resolver-unique-id
+                    serverId: "art-1",
+                    releaseRepo: "libs-snapshot",
+                    snapshotRepo: "libs-snapshot"
+                )
+            }
+            
+        }
+        
+                
         stage ('Maven build') {             //run the maven build, referencing the resolver and deployer we defined
             steps {
                 rtMavenRun (
