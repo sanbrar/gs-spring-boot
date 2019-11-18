@@ -47,7 +47,14 @@ pipeline {
                     snapshotRepo: "libs-snapshot-local"
                 )
             }
-        }       
+        }
+        
+        
+        stage ('Verify Build Version Number') {
+            steps { 
+                echo ${POM_VERSION} 
+            }
+        }
                 
         stage ('Maven build') {             //run the maven build, referencing the resolver and deployer we defined
             steps {
