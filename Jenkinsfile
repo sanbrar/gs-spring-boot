@@ -7,6 +7,12 @@ pipeline {
         MAVEN_HOME = '/usr/share/maven'
     }
     stages {
+        
+        stage ('Echo') {
+            steps {
+                echo "Hello!"
+            }
+        }
 
         stage ('Artifactory configuration') {
             steps {
