@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage ('Clone') {
             steps {
-                git branch: '${env.BRANCH_NAME}', url: "https://github.com/sanbrar/gs-spring-boot.git"
+                git branch: 'master', url: "https://github.com/sanbrar/gs-spring-boot.git"  //${env.BRANCH_NAME}
             }
         }
 
