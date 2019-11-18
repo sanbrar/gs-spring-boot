@@ -1,5 +1,6 @@
 def getPomVersion(String pomFile = 'pom.xml') {
 
+    echo 'getPomVersion'
     def version = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="${pomFile}" | grep -e "^[^[]" '
 
         // pom_version = sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true
