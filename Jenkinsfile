@@ -7,11 +7,6 @@ pipeline {
         MAVEN_HOME = '/usr/share/maven'
     }
     stages {
-        stage ('Clone') {
-            steps {
-                git branch: '${env.BRANCH_NAME}', url: "https://github.com/sanbrar/gs-spring-boot.git"
-            }
-        }
 
         stage ('Artifactory configuration') {
             steps {
