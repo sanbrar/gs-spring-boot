@@ -1,3 +1,4 @@
+def pomVersion = "2.0.0"
 def getPomVersion(String pomFile = 'pom.xml') {
 
     echo 'getPomVersion'
@@ -14,7 +15,7 @@ def getPomVersion(String pomFile = 'pom.xml') {
         //POM_IMAGE = readMavenPom().getArtifactId()
         //POM_VERSION = readMavenPom().getVersion()   
 
-    return '2.0.0'
+    return '1.0.2'
 
 }
 
@@ -26,10 +27,19 @@ pipeline {
     environment {
         MAVEN_HOME = '/usr/share/maven'
 
-        POMVERSION = getPomVersion('complete/pom.xml')
+        //POMVERSION = getPomVersion('complete/pom.xml')
 
     }
     stages {
+        
+        stage('build') {
+          steps {
+            script {
+              echo "${pomVersion}"
+              pomVersion = getPomVersion('complete/pom.xml')
+            }
+          }
+        }        
         
         stage ('Artifactory configuration') {
             steps {
