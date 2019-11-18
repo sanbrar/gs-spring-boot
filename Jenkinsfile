@@ -14,11 +14,12 @@ pipeline {
            // }
        // }
 
-        stage("Test IF "){
-          if(env.BRANCH_NAME == 'master'){
-           // Deploy steps here
-              echo "master branch"
-          }
+        stage ("Test IF ") {
+            steps {
+                if (env.BRANCH_NAME == 'master') {
+                    echo "master branch"
+                }
+            }
         }
         
         stage ('Artifactory configuration') {
