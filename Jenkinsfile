@@ -26,7 +26,7 @@ pipeline {
             }
             steps {
                 rtMavenDeployer (
-                    id: "MAVEN_DEPLOYER",   //deployer-unique-id  -- edit master TEST2
+                    id: "MAVEN_DEPLOYER",   //deployer-unique-id  
                     serverId: "art-1",
                     releaseRepo: "libs-release-local",
                     snapshotRepo: "libs-snapshot-local"
