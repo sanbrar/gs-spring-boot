@@ -14,13 +14,16 @@ pipeline {
            // }
        // }
 
-        stage ("Test IF ") {
+        stage ('Speak') {
+            when {
+                // Only say hello if a "greeting" is requested
+                expression { env.BRANCH_NAME == 'master' }
+            }
             steps {
-                if (env.BRANCH_NAME == 'master') {
-                    echo "master branch"
-                }
+                echo "master branch"
             }
         }
+        
         
         stage ('Artifactory configuration') {
             steps {
