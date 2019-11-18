@@ -8,20 +8,17 @@ pipeline {
     }
     environment {
         MAVEN_HOME = '/usr/share/maven'
-
-        //POMVERSION = getPomVersion('complete/pom.xml')
-
     }
     stages {
        
         stage('Set Variables') {
           steps {
               
-              script {
-                   echo "pomFile Name before setting ${pomFile}"                  
-                   pomFile = "complete/pom.xml"
-                    echo "After setting the pomFile: ${pomFile}"
-              }
+            script {
+                echo "pomFile Name before setting ${pomFile}"                  
+                pomFile = "complete/pom.xml"
+                echo "After setting the pomFile: ${pomFile}"
+            }
               
             script {
                 echo "pomVersion before using function to set pomVersion ${pomVersion}"
@@ -106,8 +103,3 @@ pipeline {
         }    
     }
 }
-
-
-
-
-
