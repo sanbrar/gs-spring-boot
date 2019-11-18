@@ -65,7 +65,7 @@ pipeline {
                 
                 sh 'mvn versions:set versions:commit -DnewVersion="${pom_version}-SNAPSHOT" -file="complete/pom.xml"'
 
-                sh 'mvn scm:checkin -Dincludes=complete/pom.xml -Dmessage="Setting version, preping for release."'
+               // sh 'mvn scm:checkin -Dincludes=complete/pom.xml -Dmessage="Setting version, preping for release."'
                 
             }
         }
