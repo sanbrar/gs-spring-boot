@@ -1,7 +1,9 @@
+def pomFile = "pom.xml"
 def pomVersion = "2.0.0"
+
 def getPomVersion(String pomFile = 'pom.xml') {
 
-    echo 'getPomVersion'
+    echo 'in side getPomVersion, pomFile: ${pomFile}'
     def version = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="${pomFile}" | grep -e "^[^[]" '
 
         // pom_version = sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true
@@ -34,9 +36,15 @@ pipeline {
         
         stage('build') {
           steps {
+              
+              script {
+                   echo "pomFile Name before setting ${pomFile}"                  
+                   pomFile = "complete/pom.xml"
+              }
+              
             script {
-              echo "${pomVersion}"
-              pomVersion = getPomVersion('complete/pom.xml')
+              echo "pomVersion before using function to set pomVersion ${pomVersion}"
+              pomVersion = getPomVersion("complete/pom.xml")
             }
           }
         }        
