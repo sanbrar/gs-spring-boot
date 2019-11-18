@@ -8,8 +8,13 @@ pipeline {
         
         // pom_version = sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true
         
-        pom_version = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -e "^[^[]"'
-               
+        //pom_version = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -e "^[^[]"'
+        
+        //pom_version = sh mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -v '\['
+        
+        //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
+        //POM_IMAGE = readMavenPom().getArtifactId()
+        //POM_VERSION = readMavenPom().getVersion()   
     }
     stages {
         
@@ -58,6 +63,8 @@ pipeline {
         stage ('Verify Build Version Number') {
             steps { 
                
+                sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml"'
+                
                 //pom_version = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -e "^[^\[]"'
                 
 
