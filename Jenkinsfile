@@ -6,7 +6,9 @@ pipeline {
     environment {
         MAVEN_HOME = '/usr/share/maven'
         
-        pom_version = sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true 
+        // pom_version = sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true
+        
+        pom_version = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -e "^[^[]"'
                
     }
     stages {
