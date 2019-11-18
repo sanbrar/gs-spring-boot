@@ -19,7 +19,7 @@ pipeline {
             } 
         }
         
-        stage ('Artifactory Config - Master) {
+        stage ('Artifactory Config - Master') {
             when {
                 // Only say hello if a "greeting" is requested
                 expression { env.BRANCH_NAME == 'master' }
@@ -34,7 +34,7 @@ pipeline {
             }            
         }
         
-        stage ('Artifactory Config - Feature) {
+        stage ('Artifactory Config - Feature') {
             when {
                 // Only say hello if a "greeting" is requested
                 expression { env.BRANCH_NAME != 'master' }  //Not Master
