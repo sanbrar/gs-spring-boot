@@ -10,7 +10,7 @@ pipeline {
         
         stage ('Echo') {
             steps {
-                echo "Hello! - 2"
+                echo "${env.BRANCH}"
             }
         }
 
