@@ -8,29 +8,47 @@ pipeline {
     }
     stages {
         
-        stage ('Echo') {
-            steps {
-                echo "${env.BRANCH}"
-            }
-        }
-
         stage ('Artifactory configuration') {
             steps {
-                rtMavenDeployer (
-                    id: "MAVEN_DEPLOYER",   //deployer-unique-id  -- edited in feature1 branch
-                    serverId: "art-1",
-                    releaseRepo: "libs-release-local",
-                    snapshotRepo: "libs-snapshot-local"
-                )
                 rtMavenResolver (
                     id: "MAVEN_RESOLVER",   //resolver-unique-id
                     serverId: "art-1",
                     releaseRepo: "libs-release",
                     snapshotRepo: "libs-snapshot"
+                )                
+            } 
+        }
+        
+        stage ('Artifactory Config - Master') {
+            when {
+                // Only say hello if a "greeting" is requested
+                expression { env.BRANCH_NAME == 'master' }
+            }
+            steps {
+                rtMavenDeployer (
+                    id: "MAVEN_DEPLOYER",   //deployer-unique-id  -- edit master TEST2
+                    serverId: "art-1",
+                    releaseRepo: "libs-release-local",
+                    snapshotRepo: "libs-snapshot-local"
+                )
+            }            
+        }
+        
+        stage ('Artifactory Config - Feature') {
+            when {
+                // Only say hello if a "greeting" is requested
+                expression { env.BRANCH_NAME != 'master' }  //Not Master
+            }
+            steps {
+                rtMavenDeployer (
+                    id: "MAVEN_DEPLOYER",   //deployer-unique-id  -- edit master TEST2
+                    serverId: "art-1",
+                    releaseRepo: "libs-snapshot-local",
+                    snapshotRepo: "libs-snapshot-local"
                 )
             }
-        }
-
+        }       
+                
         stage ('Maven build') {             //run the maven build, referencing the resolver and deployer we defined
             steps {
                 rtMavenRun (
