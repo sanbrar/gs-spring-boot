@@ -5,18 +5,9 @@ pipeline {
     }
     environment {
         MAVEN_HOME = '/usr/share/maven'
-        
-        // pom_version = sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true
-        
-        // POMVERSION = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -e "^[^[]" '
-        
+
         POMVERSION = getPomVersion("complete/pom.xml")
-        
-        //pom_version = sh mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -v '\['
-        
-        //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
-        //POM_IMAGE = readMavenPom().getArtifactId()
-        //POM_VERSION = readMavenPom().getVersion()   
+
     }
     stages {
         
@@ -99,7 +90,20 @@ pipeline {
 
 def getPomVersion(String pomFile) {
     def version = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="${pomFile}" | grep -e "^[^[]" '
-    return version
+
+        // pom_version = sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true
+        
+        // POMVERSION = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -e "^[^[]" '
+        
+        
+        //pom_version = sh mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -v '\['
+        
+        //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
+        //POM_IMAGE = readMavenPom().getArtifactId()
+        //POM_VERSION = readMavenPom().getVersion()   
+
+    return '2.0.0'
+
 }
 
 
