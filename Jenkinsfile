@@ -53,8 +53,10 @@ pipeline {
         stage ('Verify Build Version Number') {
             steps { 
                
-                pom_version = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -e "^[^\[]"'
-
+                //pom_version = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="complete/pom.xml" | grep -e "^[^\[]"'
+                
+                pom_version = sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true 
+               
                 echo ${pom_version}
                 
                 sh 'mvn versions:set versions:commit -DnewVersion="${pom_version}-SNAPSHOT" -file="complete/pom.xml"'
