@@ -92,7 +92,7 @@ pipeline {
                     resolverId: 'MAVEN_RESOLVER'
                 )
             }
-        }
+        } //jjj
 
         stage ('Publish build info') {
             steps {
@@ -103,3 +103,5 @@ pipeline {
         }    
     }
 }
+
+
