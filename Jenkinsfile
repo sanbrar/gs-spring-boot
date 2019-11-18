@@ -6,7 +6,7 @@ pipeline {
     environment {
         MAVEN_HOME = '/usr/share/maven'
         
-        pom_version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true 
+        pom_version = sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout -file="complete/pom.xml"', returnStdout: true 
                
     }
     stages {
