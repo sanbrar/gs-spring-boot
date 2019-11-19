@@ -16,7 +16,13 @@ pipeline {
               
             script {
                 echo "pomFile Name before setting ${pomFile}"                  
+            }
+           
+            script {
                 pomFile = "complete/pom.xml"
+            }
+                            
+            script {
                 echo "After setting the pomFile: ${pomFile}"
             }
               
