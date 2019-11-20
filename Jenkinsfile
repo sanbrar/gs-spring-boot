@@ -6,7 +6,7 @@ pipeline {
     environment {
         MAVEN_HOME = '/usr/share/maven'
         POM_FILE_NAME = 'complete/pom.xml'
-        POM_FILE_VERSION = sh(script: 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -file="${env.POM_FILE_NAME}" -Dexpression=project.version | grep -e "^[^[]" ', returnStdout: true).trim()
+        POM_FILE_VERSION = sh(script: 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -file="complete/pom.xml" -Dexpression=project.version | grep -e "^[^[]" ', returnStdout: true).trim()
     }
     stages {
         stage ('Artifactory configuration') {
@@ -27,13 +27,16 @@ pipeline {
         }
         
         stage ('Feature Branch Version Check') {
+            environment {
+                POM_VERSION_SNAPSHOT = sh(script: 'echo ${POM_FILE_VERSION}-SNAPSHOT', returnStdout: true).trim()
+            }
             when {
                 // Only say hello if a "greeting" is requested
                 expression { env.BRANCH_NAME != 'master' }  //Not Master
             }
             steps {
-                echo 'Current POM VERSION: ${POM_FILE_VERSION}'                
-                sh 'mvn versions:set versions:commit -DnewVersion="${POM_FILE_VERSION}-SNAPSHOT" -file="${POM_FILE_NAME}" '
+                echo 'Current POM VERSION: ${POM_VERSION_SNAPSHOT}'                
+                sh 'mvn versions:set versions:commit -DnewVersion="${POM_VERSION_SNAPSHOT}" -file="${POM_FILE_NAME}" '
             }
         }
                 
