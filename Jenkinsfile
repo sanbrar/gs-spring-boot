@@ -31,7 +31,7 @@ pipeline {
             } 
               
             script {
-                pomVersion = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file= ${pomFile} | grep -e "^[^[]" '
+                pomVersion = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate  -file="${pomFile}" -Dexpression=project.version | grep -e "^[^[]" '
             } 
               
             script {
