@@ -38,6 +38,9 @@ pipeline {
                 echo 'Current POM VERSION: ${POM_VERSION_SNAPSHOT}'                
                 sh 'mvn versions:set versions:commit -DnewVersion="${POM_VERSION_SNAPSHOT}" -file="${POM_FILE_NAME}" '
             }
+            steps {
+                sh 'java -version'
+            }
         }
                 
         stage ('Maven build') {             //run the maven build, referencing the resolver and deployer we defined
