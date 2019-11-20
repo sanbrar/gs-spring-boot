@@ -24,11 +24,17 @@ pipeline {
                             
             script {
                 echo "After setting the pomFile: ${pomFile}"
-            }
+            } 
               
             script {
                 echo "pomVersion before using function to set pomVersion ${pomVersion}"
+            } 
+              
+            script {
                 pomVersion = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -file="${pomFile}" | grep -e "^[^[]" '
+            } 
+              
+            script {
                 echo "After setting the pomVersion: ${pomVersion}"
             }
           }
