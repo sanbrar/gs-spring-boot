@@ -31,12 +31,11 @@ pipeline {
                 POM_VERSION_SNAPSHOT = sh(script: 'echo $(echo "${POM_FILE_VERSION}" | cut -d"-" -f1)-SNAPSHOT', returnStdout: true).trim()
             }
             when {
-                // Only say hello if a "greeting" is requested
-                expression { env.BRANCH_NAME != 'master' }  //Not Master
+                // Only run if branch is not a master
+                expression { env.BRANCH_NAME != 'master' } 
             }
             steps {
-                sh 'java -version'
-                echo 'Current POM VERSION: ${POM_VERSION_SNAPSHOT}'                
+                // Add the word "SNAPSHOT" to the POM version
                 sh 'mvn versions:set versions:commit -DnewVersion="${POM_VERSION_SNAPSHOT}" -file="${POM_FILE_NAME}" '
             }
         }
