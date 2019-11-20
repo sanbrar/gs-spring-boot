@@ -1,5 +1,5 @@
-def pomFile = "pom.xml"
-def POM_FILE_VERSION = "2.0.0"
+//def pomFile = "pom.xml"
+//def POM_FILE_VERSION = "2.0.0"
 
 pipeline {
     agent any
@@ -9,6 +9,7 @@ pipeline {
     environment {
         MAVEN_HOME = '/usr/share/maven'
         POM_FILE_NAME = 'complete/pom.xml'
+        POM_FILE_VERSION = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -file="${POM_FILE_NAME}" -Dexpression=project.version | grep -e "^[^[]" '
     }
     stages {
        
