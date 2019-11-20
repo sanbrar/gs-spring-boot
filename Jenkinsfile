@@ -85,7 +85,7 @@ pipeline {
         stage ('Verify Build Version Number') {
             steps { 
                 echo 'POM VERSION: ${POMVERSION}'                
-                sh 'mvn versions:set versions:commit -DnewVersion="${POMVERSION}-SNAPSHOT" -file="complete/pom.xml"'
+                sh 'mvn versions:set versions:commit -DnewVersion="${pomVersion}-SNAPSHOT" -file="complete/pom.xml"'
 
                // sh 'mvn scm:checkin -Dincludes=complete/pom.xml -Dmessage="Setting version, preping for release."'
                 
