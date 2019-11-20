@@ -1,5 +1,5 @@
 def pomFile = "pom.xml"
-def pomVersion = "2.0.0"
+def POM_FILE_VERSION = "2.0.0"
 
 pipeline {
     agent any
@@ -8,34 +8,35 @@ pipeline {
     }
     environment {
         MAVEN_HOME = '/usr/share/maven'
+        POM_FILE_NAME = 'complete/pom.xml'
     }
     stages {
        
         stage('Set Variables') {
           steps {
               
-            script {
-                echo "pomFile Name before setting ${pomFile}"                  
-            }
+           // script {
+         //       echo "pomFile Name before setting ${pomFile}"                  
+         //   }
            
-            script {
-                pomFile = "complete/pom.xml"
-            }
+           // script {
+           //     pomFile = "complete/pom.xml"
+          //  }
                             
             script {
-                echo "After setting the pomFile: ${pomFile}"
+                echo "After setting the pomFile: ${POM_FILE_NAME}"
             } 
               
             script {
-                echo "pomVersion before using function to set pomVersion ${pomVersion}"
+                echo "pomVersion before using function to set pomVersion ${POM_FILE_VERSION}"
             } 
               
             script {
-                pomVersion = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate  -file="${pomFile}" -Dexpression=project.version | grep -e "^[^[]" '
+                POM_FILE_VERSION = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate  -file="${POM_FILE_NAME}" -Dexpression=project.version | grep -e "^[^[]" '
             } 
               
             script {
-                echo "After setting the pomVersion: ${pomVersion}"
+                echo "After setting the pomVersion: ${POM_FILE_VERSION}"
             }
           }
         }        
@@ -85,7 +86,7 @@ pipeline {
         stage ('Verify Build Version Number') {
             steps { 
                 echo 'POM VERSION: ${POMVERSION}'                
-                sh 'mvn versions:set versions:commit -DnewVersion="${pomVersion}-SNAPSHOT" -file="complete/pom.xml"'
+                sh 'mvn versions:set versions:commit -DnewVersion="${POM_FILE_VERSION}-SNAPSHOT" -file="complete/pom.xml"'
 
                // sh 'mvn scm:checkin -Dincludes=complete/pom.xml -Dmessage="Setting version, preping for release."'
                 
