@@ -9,7 +9,7 @@ pipeline {
     environment {
         MAVEN_HOME = '/usr/share/maven'
         POM_FILE_NAME = 'complete/pom.xml'
-        POM_FILE_VERSION = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -file="${POM_FILE_NAME}" -Dexpression=project.version | grep -e "^[^[]" '
+        POM_FILE_VERSION = sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -file="complete/pom.xml" -Dexpression=project.version | grep -e "^[^[]" '
     }
     stages {
        
