@@ -35,11 +35,9 @@ pipeline {
                 expression { env.BRANCH_NAME != 'master' }  //Not Master
             }
             steps {
+                sh 'java -version'
                 echo 'Current POM VERSION: ${POM_VERSION_SNAPSHOT}'                
                 sh 'mvn versions:set versions:commit -DnewVersion="${POM_VERSION_SNAPSHOT}" -file="${POM_FILE_NAME}" '
-            }
-            steps {
-                sh 'java -version'
             }
         }
                 
