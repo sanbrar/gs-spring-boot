@@ -40,7 +40,7 @@ pipeline {
             }
         }
                 
-        stage ('Maven build') {             //run the maven build, referencing the resolver and deployer we defined
+        stage ('Maven build') {      //run the maven build, referencing the resolver and deployer we defined
             steps {
                 rtMavenRun (
                    // tool: 'maven_tool', // Maven tool name from Jenkins configuration
