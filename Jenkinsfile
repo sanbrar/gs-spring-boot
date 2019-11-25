@@ -81,8 +81,9 @@ pipeline {
                 spec: """{
                       "files": [
                         {
-                          "pattern": "${ARTIFACTORY_PATH}/*${GET_ON_GIT_COMMIT_NUM}*/*${GET_ON_GIT_COMMIT_NUM}*.POM",
-                          "target": "bazinga/"
+                          "pattern": "${ARTIFACTORY_PATH}/*${GET_ON_GIT_COMMIT_NUM}*",
+                          "target": "bazinga/",
+                          "props": "type=pom"
                         }
                       ]
                 }""" ,
