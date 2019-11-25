@@ -76,7 +76,7 @@ pipeline {
                       "files": [
                         {
                           "pattern": "libs-snapshot-local/lll/springframework/gs-spring-boot/*fe192efa59b6004f24ec090fb401871784b31bd8*",
-                          "target": "bazinga/",
+                          "target": "bazinga/"
                         }
                       ]
                 }""" ,
