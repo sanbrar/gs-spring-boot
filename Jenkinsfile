@@ -11,6 +11,7 @@ pipeline {
         PRJ_SNAPSHOT_REPO = 'libs-snapshot-local'
         POM_FILE_NAME = 'complete/pom.xml'
         POM_FILE_VERSION = sh(script: 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -file="complete/pom.xml" -Dexpression=project.version | grep -e "^[^[]" ', returnStdout: true).trim()
+        ARTIFACTORY_PATH = 'libs-snapshot-local/lll/springframework/gs-spring-boot'
         GET_ON_GIT_COMMIT_NUM = 'fe192efa59b6004f24ec090fb401871784b31bd8'
     }
     stages {
@@ -80,7 +81,7 @@ pipeline {
                 spec: """{
                       "files": [
                         {
-                          "pattern": "${PRJ_SNAPSHOT_REPO}/*${GET_ON_GIT_COMMIT_NUM}*.POM",
+                          "pattern": "${ARTIFACTORY_PATH}/*${GET_ON_GIT_COMMIT_NUM}*/*${GET_ON_GIT_COMMIT_NUM}*.POM",
                           "target": "bazinga/"
                         }
                       ]
