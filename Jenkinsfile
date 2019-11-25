@@ -23,6 +23,12 @@ pipeline {
                     releaseRepo: "libs-release-local",
                     snapshotRepo: "libs-snapshot-local"
                 )
+                //To set the Build-Info object to automatically capture environment variables while downloading and uploading files
+                rtBuildInfo (
+                    captureEnv: true
+                )                
+                
+                
             } 
         }
         
