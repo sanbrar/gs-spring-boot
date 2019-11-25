@@ -28,7 +28,7 @@ pipeline {
         
         stage ('Feature Branch Version Check') {
             environment {
-                POM_VERSION_SNAPSHOT = sh(script: 'echo $(echo "${POM_FILE_VERSION}" | cut -d"-" -f1)-SNAPSHOT', returnStdout: true).trim()
+                POM_VERSION_SNAPSHOT = sh(script: 'echo $(echo "${POM_FILE_VERSION}" | cut -d"-" -f1)-${GIT_COMMIT}-SNAPSHOT', returnStdout: true).trim()
             }
             when {
                 // Only run if branch is not a master
