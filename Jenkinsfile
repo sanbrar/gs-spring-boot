@@ -5,8 +5,13 @@ pipeline {
     }
     environment {
         MAVEN_HOME = '/usr/share/maven'
+        GLOBAL_RELEASE_REPO = 'libs-release'
+        GLOBAL_SNAPSHOT_REPO = 'libs-snapshot'
+        PRJ_RELEASE_REPO = 'libs-release-local'
+        PRJ_SNAPSHOT_REPO = 'libs-snapshot-local'
         POM_FILE_NAME = 'complete/pom.xml'
         POM_FILE_VERSION = sh(script: 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -file="complete/pom.xml" -Dexpression=project.version | grep -e "^[^[]" ', returnStdout: true).trim()
+        GET_ON_GIT_COMMIT_NUM = 'fe192efa59b6004f24ec090fb401871784b31bd8'
     }
     stages {
         stage ('Artifactory configuration') {
@@ -14,14 +19,14 @@ pipeline {
                 rtMavenResolver (
                     id: "MAVEN_RESOLVER",   //resolver-unique-id
                     serverId: "art-1",
-                    releaseRepo: "libs-release",
-                    snapshotRepo: "libs-snapshot"
+                    releaseRepo: "${GLOBAL_RELEASE_REPO}",
+                    snapshotRepo: "${GLOBAL_SNAPSHOT_REPO}"
                 )     
                 rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",   //deployer-unique-id  
                     serverId: "art-1",
-                    releaseRepo: "libs-release-local",
-                    snapshotRepo: "libs-snapshot-local"
+                    releaseRepo: "${PRJ_RELEASE_REPO}",
+                    snapshotRepo: "${PRJ_SNAPSHOT_REPO}"
                 )
                 //To set the Build-Info object to automatically capture environment variables while downloading and uploading files
                 rtBuildInfo (
@@ -75,7 +80,7 @@ pipeline {
                 spec: """{
                       "files": [
                         {
-                          "pattern": "libs-snapshot-local/lll/springframework/gs-spring-boot/*fe192efa59b6004f24ec090fb401871784b31bd8*",
+                          "pattern": "${PRJ_SNAPSHOT_REPO}/*${GET_ON_GIT_COMMIT_NUM}*.POM",
                           "target": "bazinga/"
                         }
                       ]
