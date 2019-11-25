@@ -71,7 +71,7 @@ pipeline {
         stage ('Test getting a file with git commit number') {
             steps {
             rtDownload (
-                serverId: 'art-1',
+                serverId: "art-1",
                 spec: """{
                       "files": [
                         {
