@@ -92,7 +92,7 @@ pipeline {
                     failNoOp: true
                 )
                 
-                sh(script: 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -file="osi_tmp_dl/lll/springframework/gs-spring-boot/0.1.1-fe192efa59b6004f24ec090fb401871784b31bd8-SNAPSHOT/gs-spring-boot-0.1.1-fe192efa59b6004f24ec090fb401871784b31bd8-20191125.191445-1.pom" -Dexpression=project.version | grep -e "^[^[]" ', returnStdout: true).trim()
+                sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -file="osi_tmp_dl/lll/springframework/gs-spring-boot/0.1.1-fe192efa59b6004f24ec090fb401871784b31bd8-SNAPSHOT/gs-spring-boot-0.1.1-fe192efa59b6004f24ec090fb401871784b31bd8-20191125.191445-1.pom" -Dexpression=project.version'
                 
             }
         }
