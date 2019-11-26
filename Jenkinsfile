@@ -94,6 +94,10 @@ pipeline {
                 
                 sh 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -file="osi_tmp_dl/lll/springframework/gs-spring-boot/0.1.1-fe192efa59b6004f24ec090fb401871784b31bd8-SNAPSHOT/gs-spring-boot-0.1.1-fe192efa59b6004f24ec090fb401871784b31bd8-20191125.191445-1.pom" -Dexpression=project.version'
                 
+                sh label: '', script: '''v_pom_file_name=$(find ./${JOB_TEMP_DIR} -name "*.pom")
+                    v_pom_version=$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -file="$v_pom_file_name" -Dexpression=project.version | grep -e "^[^[]")
+                    echo $v_pom_version
+                    '''
             }
         }
     }
