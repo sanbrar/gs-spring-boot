@@ -13,6 +13,7 @@ pipeline {
         POM_FILE_VERSION = sh(script: 'mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -file="complete/pom.xml" -Dexpression=project.version | grep -e "^[^[]" ', returnStdout: true).trim()
         ARTIFACTORY_PATH = 'libs-snapshot-local/lll/springframework/gs-spring-boot'
         GET_ON_GIT_COMMIT_NUM = 'fe192efa59b6004f24ec090fb401871784b31bd8'
+        JOB_TEMP_DIR = 'osi_tmp_dl'
     }
     stages {
         stage ('Artifactory configuration') {
@@ -76,18 +77,20 @@ pipeline {
         
         stage ('Test getting a file with git commit number') {
             steps {
-            rtDownload (
-                serverId: "art-1",
-                spec: """{
-                      "files": [
-                        {
-                          "pattern": "${ARTIFACTORY_PATH}/*${GET_ON_GIT_COMMIT_NUM}*/*.pom",
-                          "target": "bazinga/"
-                        }
-                      ]
-                }""" ,
-                failNoOp: true
-            )
+                sh 'rm -R ${JOB_TEMP_DIR}'
+            
+                rtDownload (
+                    serverId: "art-1",
+                    spec: """{
+                          "files": [
+                            {
+                              "pattern": "${ARTIFACTORY_PATH}/*${GET_ON_GIT_COMMIT_NUM}*/*.pom",
+                              "target": "${JOB_TEMP_DIR}/"
+                            }
+                          ]
+                    }""" ,
+                    failNoOp: true
+                )
             }
         }
     }
