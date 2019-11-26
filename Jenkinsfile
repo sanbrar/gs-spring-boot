@@ -77,7 +77,7 @@ pipeline {
         
         stage ('Test getting a file with git commit number') {
             steps {
-                sh 'rm -R ${JOB_TEMP_DIR}'
+                sh 'rm -f -R ${JOB_TEMP_DIR}/*'
             
                 rtDownload (
                     serverId: "art-1",
